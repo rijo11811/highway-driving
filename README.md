@@ -72,21 +72,31 @@ The Path planning system has following main modules:
 2:Trajectory Generation
 
 ### Behavior planning(Line 227 in main.cpp and files vehicle.cpp, vehicle.h, cost.cpp, cost.h)
+
 This module takes into account the following factors:
-#####1:the current position ,velocity ,acceleration and state(lane change, Keep lane ,prepare for lane change states) of our Ego car. The current acceleration of the car is calculated based on the first to points in the previous path list.
-#####2:Current position and velocity of cars around the ego car.
+
+1:the current position ,velocity ,acceleration and state(lane change, Keep lane ,prepare for lane change states) of our Ego car. The current acceleration of the car is calculated based on the first to points in the previous path list.
+
+2:Current position and velocity of cars around the ego car.
+
 The above factors are used to create several trajectories(Goal states) for the Ego car.(E.g end state if the car switches to the right lane or left lane). These trajectories are then evaluated using following cost functions:
-#####1:Efficiency cost
+
+1:Efficiency cost
 The end states that result in slowing dows the Ego car are assigned a higher cost.
-#####2:Goal distance cost
+
+2:Goal distance cost
 The end states that result in taking car away from the goal are assigned higher cost.
-#####3:Lane traffic costThe lanes which are comparatively free are assigned lower cost.
+
+3:Lane traffic costThe lanes which are comparatively free are assigned lower cost.
 The sum of these costs is lowest for the most suitable trajectory( end state).This end state is achieved using trajectory generation.
 
 ### Trajectory Generation:
+
 My initial efforts were in the direction of using polynomial trajectory generation for generating paths which would have required a jerk minimizing trajectory and taking into account the surrounding vehicles. Later, I found functionalities of spline.h enough to produce a decent trajectory. This required adding extra lines of code in the behavior planning file vehicle.cpp(259-265) to make sure that the trajectory stays away from other vehicles.
+
 The trajectory generation is achieved using a library called spline.h. This library has function which generates points fitting a curve defined using points (min size > 2). In my case I defined this curve using points last two points of the previous trajectory, and 3 points that are 40, 60 and 90 meters away on the target road lane.(line 274-278 in main.cpp)
-#### Trajectory point generation(324 – 357):
+
+### Trajectory point generation(324 – 357):
 The spacing between the points decides the speed of the car. In order to make sure that the acceleration and jerk do not exceed during subsequent trajectories, this section includes an if-else code which makes sure for accelerations above a certain threshold, the speed increases in a more brisk manner.
 
 
