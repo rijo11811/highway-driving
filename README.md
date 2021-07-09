@@ -65,9 +65,12 @@ The car stays in its lane most of the time but when it changes lane because of t
 ### The car is able to change lanes
 The car change lanes when the there is a slow car in front of it, and it is safe to change lanes (no other cars around) or when it is safe to return the center lane.
 ## Reflection
-#The Path planning system has following main modules:
+The Path planning system has following main modules:
+
 1:Behavior planning
+
 2:Trajectory Generation
+
 ### Behavior planning(Line 227 in main.cpp and files vehicle.cpp, vehicle.h, cost.cpp, cost.h)
 This module takes into account the following factors:
 #####1:the current position ,velocity ,acceleration and state(lane change, Keep lane ,prepare for lane change states) of our Ego car. The current acceleration of the car is calculated based on the first to points in the previous path list.
